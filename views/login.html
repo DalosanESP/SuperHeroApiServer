@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-content">
+            <h2 class="app-header-title" style="color: white; text-align: center;">Super<span>Hero.</span></h2>
+            <br>
+            <form id="newUserForm" action="/loginAuth" method="POST">
+                <div class="form-group">
+                    <label for="text">Username or email</label>
+                    <input type="text" id="emailOrUsername" name="emailOrUsername" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="toSignUp">
+                    <p>Don't have an account yet? <a href="/register">Sign Up Here</a></p>
+                </div>
+                <br>
+                <div class="buttonContainer">
+                    <button type="submit"><span>Sign In</span></button>
+                </div>
+            </form>
+            <p class="forgot-password">-or-</p>
+        </div>
+        <div class="buttonContainer" onclick="redirectToGoogle()">
+            <button type="button">
+                <span> <img src="https://img.freepik.com/iconos-gratis/google_318-278809.jpg?w=2000" alt=""><a
+                        style="vertical-align: 5px;">Continue with Google</a></span>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function redirectToGoogle() {
+      // Redirigir al usuario a la URL de Google cuando se haga clic en el botón
+      window.location.href = "/google";
+    }
+</script>

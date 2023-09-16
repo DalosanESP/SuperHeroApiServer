@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <style>
+       
+    </style> 
+    <script src="https://kit.fontawesome.com/cdec4b4bc8.js" crossorigin="anonymous"></script>
+    <script>
+        function openCenteredPopup() {
+            const width = 800;
+            const height = 600;
+            const left = (window.innerWidth - width) / 2;
+            const top = (window.innerHeight - height) / 2;
+            window.open('/uploadImage', '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-dark justify-content-between">
+
+        <div class="nav-container">
+            <img src="<%= userImage %>" alt="">
+            <div class="overlay">
+                <p class="clickable-text" onclick="openCenteredPopup()">Cambiar Imagen</p>
+            </div>
+        </div>
+        <h1><%= userName %></h1>
+        <form class="form-inline" method="GET" action="/search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search your superhero here..." aria-label="Search" name="name">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+        <button id="logoutButton">Log Out</button>
+    </nav>
+    
+    <div class="favorites">
+        <div class="favorites">
+            <% if (results != null) { %>
+                <% for (let i = 0; i < results.length; i++) { %>
+                    <div class="a">
+                        <div class="card text-white bg-dark mb-3" style="width: 18rem;">
+                            <img src="<%= results[i].image.url %>">
+                            <article>
+                            <div class="card-header">
+                                <div class="nameTrash">
+                                    <h5><%= results[i].name %></h5>
+                                    <i class="fa-solid fa-trash" style="color: red; cursor: pointer;" name="delete" data-id="<%= results[i].id %>"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    <% } else { %>
+        <h1><%= userName%></h1>
+        <h1>Todavía no hay favoritos</h1>
+    <% } %>
+</body>
+<script>
+    // Manejar el evento de clic en el botón de cierre de sesión
+document.getElementById('logoutButton').addEventListener('click', async () => {
+  // Realizar una solicitud al servidor para revocar el token y realizar otras tareas necesarias
+  try {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      credentials: 'same-origin' // Incluir las cookies de autenticación
+    });
+
+    if (response.ok) {
+      // Redirigir al usuario a la página de inicio de sesión o a la página principal
+      window.location.href = '/login'; // Cambia esto según tus rutas
+    } else {
+      console.error('Error during logout');
+    }
+  } catch (error) {
+    console.error('Error during logout:', error);
+  }
+});
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</html>

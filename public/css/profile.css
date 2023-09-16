@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+:root {
+  --poppins-font: 'Poppins', sans-serif;
+  --dark-color: #0a0a0a;
+  --red-color: #f64445;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--red-color);
+  background: -o-linear-gradient(281deg, #f64445 0%, #611cac 100%);
+  background: linear-gradient(169deg, #f64445 0%, #611cac 100%);
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+
+.nav-container {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-container img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 150px;
+}
+
+.favorites {
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+gap: 20px;
+}
+
+img {
+cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Cambia la opacidad aquí */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Comienza con opacidad baja */
+  transition: opacity 0.3s;
+  border-radius: 150px;
+  cursor: pointer;
+  text-align: center;
+  text-align: baseline;
+}
+
+.nav-container:hover .overlay {
+  opacity: 1; /* Cambia la opacidad al pasar el cursor por encima */
+}
+
+.clickable-text {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.userInfo{
+  display: flex;
+}
+
+.favorites{
+  display: flex;
+  padding: 40px;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s ease;
+}
+
+h1 {
+  text-align: left;
+  align-items: left;
+  margin-left: -500px;
+  margin-top: 20px;
+}
+
+.favorites .a:hover{
+  transform: scale(1.1);
+}
+
+.nameTrash {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.app {
+  background-color: var(--dark-color);
+  margin: 2rem;
+  padding: 5rem;
+  border-radius: 6px;
+  color: #fff;
+  -webkit-box-shadow: 0px 5px 11px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 5px 11px 0px rgba(0, 0, 0, 0.5);
+}
+
+.login-container {
+  background-color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 400px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+section {
+  display: flex;
+  width: 600px;
+  height: 430px;
+}
+
+section img {
+  width: 0px;
+  flex-grow: 1;
+  object-fit: cover;
+  opacity: .8;
+  transition: .5s ease;
+}
+
+section img:hover {
+  cursor: pointer;
+  width: 300px;
+  opacity: 1;
+  filter: contrast(120%);
+}

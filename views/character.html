@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your SuperHero</title>
+    <link rel="stylesheet" href="/css/character.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .tab-body-single {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-wrapper">
+        <div class="app">
+            <!-- app header -->
+            <div class="app-header">
+                <h2 class="app-header-title">Super<span>Hero.</span></h2>
+                <form class="app-header-search" method="GET" action="/search">
+                    <input type="text" class="form-control" placeholder="Search your superhero here ..." name="name">
+                    <button type="submit" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="search-list" id="search-list">
+                        <!-- <div class = "search-list-item">
+                            <img src = "images/thumbnail-batman.jpg" alt = "">
+                            <p>Batman</p>
+                        </div> -->
+                        <td>
+                            <h1></h1>
+                        </td>
+                    </div>
+                </form>
+            </div>
+            <!-- end of app header -->
+
+            <div class="app-body">
+                <div class="app-body-content">
+                    <!-- app body thumbnail -->
+                    <div class="app-body-content-thumbnail">
+                        <article>
+                            <figure>
+                                <img src="<%= results.image.url %>" alt="Descripción de la imagen">
+                                <figcaption>Double click if you like it!</figcaption>
+                            </figure>
+                            <svg aria-label="I like it" fill="red" role="img" viewBox="0 0 48 48">
+                                <title>I like it</title>
+                                <path
+                                    d="M24 44.5c-0.9 0-1.7-0.4-2.3-1.1C10.7 32 4 25.2 4 17.5 4 11.2 8.7 6 14.4 6 18 6 21.2 8.4 24 11c2.8-2.6 6-5 9.6-5 5.7 0 10.4 5.2 10.4 11.5 0 7.7-6.7 14.5-17.7 25.9-0.6 0.6-1.4 1-2.3 1z">
+                                </path>
+                            </svg>
+                        </article>
+                    </div>
+                    <!-- end of app body thumbnail -->
+
+                    <div class="app-body-content-list">
+                        <div class="name">
+                            <%= results.name %>
+                        </div>
+
+                        <!-- tabs head -->
+                        <div class="app-body-tabs-head">
+                            <button type="button" class="tab-head-single" data-id="tab1">
+                                <span>Power Stats</span>
+                            </button>
+                            <button type="button" class="tab-head-single" data-id="tab2">
+                                <span>Biography</span>
+                            </button>
+                            <button type="button" class="tab-head-single" data-id="tab3">
+                                <span>Appearance</span>
+                            </button>
+                            <button type="button" class="tab-head-single" data-id="tab4">
+                                <span>Connections</span>
+                            </button>
+                        </div>
+                        <!-- end of tabs head -->
+
+                        <!-- tabs body -->
+                        <div class="app-body-tabs-body">
+                            <!-- Power Stats tab -->
+                            <ul class="tab-body-single powerstats" id="tab1">
+                                <li>
+                                    <div>
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Intelligence</span>
+                                    </div>
+                                    <span>
+                                        <%= results.powerstats.intelligence %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Strength</span>
+                                    </div>
+                                    <span>
+                                        <%= results.powerstats.strength %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Speed</span>
+                                    </div>
+                                    <span>
+                                        <%= results.powerstats.speed %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Durability</span>
+                                    </div>
+                                    <span>
+                                        <%= results.powerstats.durability %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Power</span>
+                                    </div>
+                                    <span>
+                                        <%= results.powerstats.power %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <div>
+                                        <i class="fa-solid fa-shield-halved"></i>
+                                        <span>Combat</span>
+                                    </div>
+                                    <span>
+                                        <%= results.powerstats.combat %>
+                                    </span>
+                                </li>
+                            </ul>
+                            <!-- end of Power Stats tab -->
+
+                            <!-- biography tab -->
+                            <ul class="tab-body-single biography" id="tab2">
+                                <li>
+                                    <span>Full name</span>
+                                    <span>
+                                        <%= results.biography['full-name'] %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>Alert Egos</span>
+                                    <span>
+                                        <%= results.biography['alter-egos'] %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>Aliases</span>
+                                    <span>
+                                        <%= results.biography.aliases %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>Place of Birth</span>
+                                    <span>
+                                        <%= results.biography['place-of-birth'] %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>First Appearance</span>
+                                    <span>
+                                        <%= results.biography['first-appearance'] %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>Publisher</span>
+                                    <span>
+                                        <%= results.biography.publisher %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>Alignment</span>
+                                    <span>
+                                        <%= results.biography.alignment %>
+                                    </span>
+                                </li>
+                            </ul>
+                            <!-- end of biography tab -->
+
+                            <!-- appearance -->
+                            <ul class="tab-body-single appearance" id="tab3">
+                                <li>
+                                    <span>
+                                        <i class="fas fa-star"></i> Gender
+                                    </span>
+                                    <span>
+                                        <%= results.appearance.gender %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fas fa-star"></i> Race
+                                    </span>
+                                    <span>
+                                        <%= results.appearance.race %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fas fa-star"></i> Height
+                                    </span>
+                                    <span>
+                                        <%= results.appearance.height %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fas fa-star"></i> Weight
+                                    </span>
+                                    <span>
+                                        <%= results.appearance.weight %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fas fa-star"></i> Eye Color
+                                    </span>
+                                    <span>
+                                        <%= results.appearance['eye-color'] %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>
+                                        <i class="fas fa-star"></i> Hair Color
+                                    </span>
+                                    <span>
+                                        <%= results.appearance['hair-color'] %>
+                                    </span>
+                                </li>
+                            </ul>
+                            <!-- end of appearance -->
+
+                            <!-- Connections -->
+                            <ul class="tab-body-single connections" id="tab4">
+                                <li>
+                                    <span>Affiliation</span>
+                                    <span>
+                                        <%= results.connections['group-affiliation'] %>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span>Relatives</span>
+                                    <span>
+                                        <%= results.connections.relatives %>
+                                    </span>
+                                </li>
+                            </ul>
+                            <!-- end of Connections -->
+                        </div>
+                        <!-- end of tabs body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var tabButtons = document.getElementsByClassName("tab-head-single");
+        var tabContents = document.getElementsByClassName("tab-body-single");
+
+        // Show first description after load
+        showTab(tabButtons[0].getAttribute("data-id"));
+
+        // Change tabs
+        for (var i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].addEventListener("click", function () {
+                var tabId = this.getAttribute("data-id");
+                showTab(tabId);
+            });
+        }
+
+        // Show tabs content
+        function showTab(tabId) {
+            // Hide the other descriptions
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].style.display = "none";
+            }
+
+            // Show the description selected
+            var tabContent = document.getElementById(tabId);
+            tabContent.style.display = "block";
+
+            // Change text color to red for the selected tab
+            for (var i = 0; i < tabButtons.length; i++) {
+                if (tabButtons[i].getAttribute("data-id") === tabId) {
+                    tabButtons[i].style.color = "#f64445";
+                } else {
+                    tabButtons[i].style.color = ""; // Reset color for other tabs
+                }
+            }
+        }
+
+        const img = document.querySelector('img');
+        const icon = document.querySelector('svg');
+
+        img.addEventListener('dblclick', () => {
+            icon.classList.add('like')
+
+            setTimeout(() => {
+                icon.classList.remove('like')
+            }, 1000)
+
+            const id = "<%= results.id %>";
+
+            // Realizar la solicitud POST con fetch()
+            fetch('/addFavorite', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: id })
+            })
+        });
+    });
+</script>
+
+</html>
