@@ -24,7 +24,7 @@ app.use('/google/callback', (req, res, next) => {
 
 // Configura CORS para permitir solicitudes desde http://localhost:3000
 app.use(cors({
-  origin: 'http://127.0.0.1:3001',
+  origin: 'https://super-hero-api-dalosan.netlify.app/',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Habilita el envío de cookies u otros datos de autenticación
 }));
