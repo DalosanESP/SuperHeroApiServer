@@ -1,5 +1,6 @@
 import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import dotenv from 'dotenv'
+import { runSelectQuery } from '../config/db.js';
 import "../app.js";
 
 dotenv.config();
@@ -13,7 +14,7 @@ export function configureGoogleAuth(passport) {
         try {
             console.log(profile);
             console.log('Iniciando estrategia de autenticación de Google');
-            
+
             // Ejecuta una consulta SELECT utilizando la función runSelectQuery
             console.log(profile.id);
             const users = await runSelectQuery("SELECT * FROM users WHERE webId = '" + profile.id + "'");
@@ -33,10 +34,10 @@ export function configureGoogleAuth(passport) {
                     picture: profile.photos[0].value,
                     favorites: null
                 };
-                   
+
                 // Ejecuta una consulta INSERT utilizando la función runSelectQuery
-                const result = await runSelectQuery('INSERT INTO users SET ?', newUser);
-                
+                const result = await runSelectQuery("INSERT INTO users (webId, username, email, picture, favorites) VALUES ( '"+ profile.id +"', '"+ profile.displayName +"', '"+ profile.emails[0].value +"', '"+ profile.photos[0].value +"', '"+ JSON.stringify(newUser.favorites) + "')");
+
                 newUser.id = result.insertId;
                 return done(null, newUser);
             }
@@ -46,14 +47,13 @@ export function configureGoogleAuth(passport) {
     }));
 
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user.webId);
     });
 
     passport.deserializeUser(async function (id, done) {
         try {
-            // Ejecuta una consulta SELECT utilizando la función runSelectQuery
-            const users = await runSelectQuery('SELECT * FROM users WHERE id = $1', [id]);
-            
+            const users = await runSelectQuery("SELECT * FROM users WHERE webId = '" + id + "'");
+
             if (users.length > 0) {
                 return done(null, users[0]);
             } else {

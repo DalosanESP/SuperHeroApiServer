@@ -18,11 +18,15 @@ const client = new Client({
   database: 'superheroApiUsers',
   password: 'Tq4VKnUoQF8a',
   port: 5432,
+  ssl: {
+    require: true, // Habilita SSL
+  },
 }); client.connect();
 
 // Función para ejecutar una consulta SELECT
 export async function runSelectQuery(query) {
   try {
+    console.log(query);
     const result = await client.query(query);
     return result.rows;
   } catch (err) {

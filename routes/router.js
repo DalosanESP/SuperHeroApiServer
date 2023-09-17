@@ -6,14 +6,37 @@ import { searchSuperHero, searchSuperHeroById } from "../controller/controller.j
 import { addFavoriteCharacter, searchFavorites } from "../helpers/helpers.js";
 import { usersDAO } from "../database/users-dao.js";
 // import { con } from '../config/db.js'
+import CustomLocalStrategy from "../middleware/customStrategyConstructor.js";
 import configureLocalStrategy from "../middleware/passport.js";
 import multer from 'multer';
+import { error } from "console";
 
 
 const router = express.Router();
 configureGoogleAuth(passport);
 export let nameOfHero = null;
-// const localStrategy = configureLocalStrategy(con);
+const localStrategy = configureLocalStrategy;
+
+passport.use('local', new CustomLocalStrategy({
+    usernameField: 'emailOrUsername', // Campo para el nombre de usuario o correo electrónico
+    passwordField: 'password', // Campo para la contraseña
+}, async (emailOrUsername, password, done) => {
+    try {
+        console.log(emailOrUsername);
+        const query = runSelectQuery("SELECT * FROM users WHERE email = '" + emailOrUsername + "' OR username = '" + emailOrUsername + "' AND password = '" + password + "'")
+        console.log("ESTAMOS AQUI" + query)
+        if (!user) {
+            // Si no se encuentra un usuario, las credenciales son inválidas
+            return done(null, false, { message: 'Invalid credentials' });
+        }
+
+        // Si se encuentra un usuario, las credenciales son válidas
+        return done(null, user);
+    } catch (error) {
+        // Si se produce un error en la consulta, manejarlo adecuadamente
+        return done(error);
+    }
+}));
 // passport.use(localStrategy);
 
 router.get('/', (req, res) => {
@@ -46,6 +69,7 @@ router.get('/uploadImage', ensureAuthenticated, (req, res) => {
 router.post('/addFavorite', ensureAuthenticated, addFavoriteCharacter);
 
 router.post('/loginAuth', (req, res, next) => {
+    console.log('Autenticando...')
     passport.authenticate('local', (err, user, info) => {
         if (err) {
             console.log('Se produjo un error durante la autenticación.');
@@ -60,7 +84,7 @@ router.post('/loginAuth', (req, res, next) => {
         // Autenticación exitosa, iniciar sesión del usuario
         req.logIn(user, (err) => {
             if (err) {
-                console.log('Se produjo un error durante la sesión.')
+                console.log('Se produjo un error durante la sesión.' + err);
                 return res.status(500).json({ error: 'Se produjo un error durante la sesión.' });
             }
 
@@ -72,7 +96,7 @@ router.post('/loginAuth', (req, res, next) => {
 });
 
 router.post('/newUser', usersDAO.createUser)
-    
+
 
 let upload;
 // Path to handle image upload

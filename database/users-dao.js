@@ -1,4 +1,5 @@
 // import { con } from '../config/db.js'
+import { runSelectQuery } from "../config/db.js";
 import express from "express";
 import passport from 'passport';
 import { generateRandomNumber } from '../helpers/helpers.js';
@@ -67,24 +68,18 @@ usersDAO.getUserByEmail = (req, res) => {
 };
 
 // Método para crear un nuevo usuario
-usersDAO.createUser = (req, res) => {
+usersDAO.createUser = async function (req, res) {
   const newUser = req.body;
-  con.query('SELECT * FROM users WHERE email = ? OR username = ?', [req.body.email, req.body.username], (err, results) => {
-    if (results.length > 0) {
-      res.status(500).json({ error: 'Ya existe un usuario asociado a ese nombre o email, esto hay que cambiarlo' });
-    } else {
-      newUser.webId = generateRandomNumber();
-      console.log(newUser);
-      con.query('INSERT INTO users SET ?', newUser, (err, results) => {
-        if (err) {
-          res.status(500).json({ error: 'Error al crear el usuario' });
-        } else {
-          res.redirect('http://127.0.0.1:3001/main');
-        }
-      })
-    }
-  })
-};
+  const users = await runSelectQuery("SELECT * FROM users WHERE email = '" + req.body.email + "' OR username = '" + req.body.email + "'")
+  if (users.length > 0) {
+    res.status(500).json({ error: 'Ya existe un usuario asociado a ese nombre o email, esto hay que cambiarlo' });
+  } else {
+    newUser.webId = generateRandomNumber();
+    console.log(newUser);
+    const result = await runSelectQuery("INSERT INTO users (webId, username, email, password) VALUES ( '" + newUser.webId + "', '" + newUser.username + "', '" + newUser.email + "', '" + newUser.password + "')");
+    res.redirect('http://127.0.0.1:3001/main');
+  }
+}
 
 // Método para actualizar los datos de un usuario
 usersDAO.updateUser = (req, res) => {
@@ -144,19 +139,20 @@ usersDAO.login = (req, res) => {
 };
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  done(null, user.webId);
 });
 
-passport.deserializeUser(function (id, done) {
-  con.query('SELECT * FROM users WHERE id = ?', [id], function (err, result) {
-    if (err) {
-      return done(err);
-    }
+passport.deserializeUser(async function (id, done) {
+  try {
+    // Ejecuta una consulta SELECT utilizando la función runSelectQuery
+    const users = await runSelectQuery("SELECT * FROM users WHERE webId = '" + id + "'");
 
-    if (result.length > 0) {
-      return done(null, result[0]);
+    if (users.length > 0) {
+      return done(null, users[0]);
     } else {
       return done(null, null);
     }
-  });
+  } catch (err) {
+    return done(err);
+  }
 });
