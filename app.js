@@ -26,11 +26,11 @@ const allowedOrigins = [
   'https://main--super-hero-api-dalosan.netlify.app/',
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: allowedOrigins,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Habilita el envío de cookies u otros datos de autenticación
-}));
+  credentials: true,
+};
 
 app.use(cors(corsOptions));
 
