@@ -49,7 +49,7 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 
 // Google callback route after login
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), (req, res) => {
-    res.redirect('http://127.0.0.1:3001/main');
+    res.redirect('https://main--super-hero-api-dalosan.netlify.app/main');
 });
 
 router.get('/main', ensureAuthenticated, (req, res) => {

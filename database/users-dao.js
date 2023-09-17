@@ -77,7 +77,7 @@ usersDAO.createUser = async function (req, res) {
     newUser.webId = generateRandomNumber();
     console.log(newUser);
     const result = await runSelectQuery("INSERT INTO users (webId, username, email, password) VALUES ( '" + newUser.webId + "', '" + newUser.username + "', '" + newUser.email + "', '" + newUser.password + "')");
-    res.redirect('http://127.0.0.1:3001/main');
+    res.redirect('https://main--super-hero-api-dalosan.netlify.app/main');
   }
 }
 
