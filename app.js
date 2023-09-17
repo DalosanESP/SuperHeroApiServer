@@ -21,13 +21,21 @@ app.use('/google/callback', (req, res, next) => {
   next();
 });
 
+const allowedOrigins = [
+  'https://super-hero-api-dalosan.netlify.app/',
+  'https://main--super-hero-api-dalosan.netlify.app/',
+];
 
-// Configura CORS para permitir solicitudes desde http://localhost:3000
 app.use(cors({
-  origin: 'https://super-hero-api-dalosan.netlify.app/',
+  origin: allowedOrigins,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Habilita el envío de cookies u otros datos de autenticación
 }));
+
+app.use(cors(corsOptions));
+
+// Configura CORS para permitir solicitudes desde http://localhost:3000
+
 
 app.use(session({
     secret: 'mySecretKey',
