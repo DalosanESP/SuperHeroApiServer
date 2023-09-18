@@ -10,9 +10,9 @@
 //   });
 
 import pkg from 'pg';
-const { Client } = pkg;
+const { Pool } = pkg;
 
-const client = new Client({
+const pool = new Pool({
   user: 'fl0user',
   host: 'ep-still-dew-39348852.eu-central-1.aws.neon.tech',
   database: 'superheroApiUsers',
@@ -21,10 +21,11 @@ const client = new Client({
   ssl: {
     require: true, // Habilita SSL
   },
-}); client.connect();
+});
 
 // Función para ejecutar una consulta SELECT
 export async function runSelectQuery(query) {
+  const client = await pool.connect();
   try {
     console.log(query);
     const result = await client.query(query);

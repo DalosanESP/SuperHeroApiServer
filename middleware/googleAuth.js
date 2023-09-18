@@ -47,7 +47,8 @@ export function configureGoogleAuth(passport) {
     }));
 
     passport.serializeUser(function (user, done) {
-        done(null, user.webId);
+        console.log(user);
+        done(null, user.id);
     });
 
     passport.deserializeUser(async function (id, done) {

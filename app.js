@@ -22,8 +22,11 @@ app.use('/google/callback', (req, res, next) => {
 });
 
 const allowedOrigins = [
-  'https://super-hero-api-dalosan.netlify.app/',
-  'https://main--super-hero-api-dalosan.netlify.app/',
+  'http://127.0.0.1:3001',
+  'http://192.168.1.60:3001',
+  'http://127.0.0.1:3000',
+  'https://super-hero-api-dalosan.netlify.app',
+  'https://main--super-hero-api-dalosan.netlify.app',
 ];
 
 const corsOptions = {
@@ -38,9 +41,9 @@ app.use(cors(corsOptions));
 
 
 app.use(session({
-    secret: 'mySecretKey',
-    resave: false,
-    saveUninitialized: false
+  secret: 'mySecretKey',
+  resave: false,
+  saveUninitialized: false
 }));
 
 app.use(passport.initialize());
